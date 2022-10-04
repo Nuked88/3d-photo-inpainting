@@ -761,7 +761,7 @@ def remove_dangling(mesh, edge_ccs, edge_mesh, info_on_pix, image, depth, config
             info_on_pix[(hx, hy)][0]['depth'] = new_depth
             info_on_pix[(hx, hy)][0]['disp'] = 1./new_depth
             new_node = (hx, hy, new_depth)
-            mesh = refresh_node(single_edge_node, mesh.node[single_edge_node], new_node, dict(), mesh)
+            mesh = refresh_node(single_edge_node, mesh.nodes[single_edge_node], new_node, dict(), mesh)
             edge_ccs[edge_cc_id] = set([new_node])
             for ne in largest_cc:
                 mesh.add_edge(new_node, ne)
@@ -962,8 +962,8 @@ def context_and_holes(mesh, edge_ccs, config, specific_edge_id, specific_edge_lo
     forbidden_map = np.ones((mesh.graph['H'] - forbidden_len, mesh.graph['W'] - forbidden_len))
     forbidden_map = np.pad(forbidden_map, ((forbidden_len, forbidden_len), (forbidden_len, forbidden_len)), mode='constant').astype(np.bool)
     cur_tmp_mask_map = np.zeros_like(forbidden_map).astype(np.bool)
-    passive_background = 10 if 10 is not None else background_thickness
-    passive_context = 1 if 1 is not None else context_thickness
+    passive_background = 10 if 10 != None else background_thickness
+    passive_context = 1 if 1 != None else context_thickness
 
     for edge_id, edge_cc in enumerate(edge_ccs):
         cur_mask_cc = None; cur_mask_cc = []
